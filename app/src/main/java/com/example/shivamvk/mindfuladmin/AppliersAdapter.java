@@ -55,11 +55,11 @@ public class AppliersAdapter extends RecyclerView.Adapter<AppliersAdapter.ViewHo
 
         String name = user.getName();
         final String email = user.getEmail();
-        String number = user.getNumber();
+        final String number = user.getNumber();
         String emailverified = user.getEmailverified();
         String numberverified = user.getNumberverified();
 
-        if(!LIST_APPLIERS.contains(email)){
+        if(!LIST_APPLIERS.contains(number)){
             viewHolder.llApplier.setVisibility(View.GONE);
             ViewGroup.MarginLayoutParams layoutParams =
                     (ViewGroup.MarginLayoutParams) viewHolder.cvApplier.getLayoutParams();
@@ -109,7 +109,7 @@ public class AppliersAdapter extends RecyclerView.Adapter<AppliersAdapter.ViewHo
                                         if (snapshot1.getKey().equals(orderid)){
                                             snapshot1.child("completed").getRef().setValue("Yes");
                                             snapshot1.child("appliedby").getRef().removeValue();
-                                            snapshot1.child("supplier").getRef().setValue(email);
+                                            snapshot1.child("supplier").getRef().setValue(number);
                                         }
                                     }
                                 }
@@ -130,7 +130,7 @@ public class AppliersAdapter extends RecyclerView.Adapter<AppliersAdapter.ViewHo
                                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                                     for(DataSnapshot snapshot1: snapshot.child("appliedfor").getChildren()){
                                         if(snapshot1.getKey().equals(orderid)){
-                                            if (snapshot.getKey().equals(generateHash(email))){
+                                            if (snapshot.getKey().equals(number)){
                                                 snapshot1.child("completed").getRef().setValue("Accepted");
                                             } else {
                                                 snapshot1.child("completed").getRef().setValue("Yes");
