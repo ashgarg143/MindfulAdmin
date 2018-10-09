@@ -21,7 +21,7 @@ import java.util.List;
 
 public class UserOrdersActivity extends AppCompatActivity {
 
-    private String userTtpe,userEmail,userName;
+    private String userType,userEmail,userName,userNumber;
     List<Order> orderList;
     private RecyclerView rvOrders;
     private ProgressBar pbOrders;
@@ -31,10 +31,11 @@ public class UserOrdersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_orders);
-        
-        userTtpe = getIntent().getStringExtra("usertype");
-        userEmail = getIntent().getStringExtra("email");
+
+        userType = getIntent().getStringExtra("usertype");
+        //userEmail = getIntent().getStringExtra("email");
         userName = getIntent().getStringExtra("name");
+        userNumber = getIntent().getStringExtra("number");
 
         rvOrders = findViewById(R.id.rv_orders);
         pbOrders = findViewById(R.id.pb_orders);
@@ -47,7 +48,7 @@ public class UserOrdersActivity extends AppCompatActivity {
 
         setTitle("Orders by "+userName);
         
-        if (userTtpe.equals("users")){
+        if (userType.equals("users")){
             setTitle("Orders by "+userName);
             loadUserOrders(); 
         } else {
@@ -59,7 +60,7 @@ public class UserOrdersActivity extends AppCompatActivity {
     private void loadSupplierOrders() {
 
         DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("suppliers").child(generateHash(userEmail))
+                .getReference("suppliers").child(userNumber)
                 .child("appliedfor");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,7 +86,7 @@ public class UserOrdersActivity extends AppCompatActivity {
 
     private void loadUserOrders() {
         DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("users").child(generateHash(userEmail))
+                .getReference("users").child(userNumber)
                 .child("orders");
         reference.addValueEventListener(new ValueEventListener() {
             @Override

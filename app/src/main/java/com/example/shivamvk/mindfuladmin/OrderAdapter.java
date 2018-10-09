@@ -43,13 +43,22 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         Order order = orderList.get(i);
 
-        final String orderid = generateHash(
+        /*final String orderid = generateHash(
                 order.getLoadingPoint(),
                 order.getTripDestination(),
                 order.getTruckType(),
                 order.getMaterialType(),
                 order.getLoadingDate()
         );
+*/
+
+        final String orderid = generateHash(
+                order.getLoadingPoint(),
+                order.getTripDestination(),
+                order.getTruckType(),
+                order.getMaterialType(),
+                order.getLoadingDate(),
+                order.getLoadingTime());
 
         String loadingPoint = order.getLoadingPoint();
         String destinationPoint = order.getTripDestination();
@@ -215,5 +224,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
             ivOrderItemTruckType = itemView.findViewById(R.id.iv_order_item_truck_type);
         }
+    }
+
+
+    private String generateHash(String s, String s1, String s2, String s3, String s4, String s5) {
+        int hash = 21;
+        String main = s + s1 + s2 + s3 + s4 + s5;
+        for (int i = 0; i < main.length(); i++) {
+            hash = hash*31 + main.charAt(i);
+        }
+        if (hash < 0){
+            hash = hash * -1;
+        }
+        return hash + "";
     }
 }

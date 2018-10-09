@@ -63,7 +63,8 @@ public class UsersSupplierAdapter extends RecyclerView.Adapter<UsersSupplierAdap
             public void onClick(View view) {
                 Intent intent =new Intent(context,UserOrdersActivity.class);
                 intent.putExtra("usertype",userType);
-                intent.putExtra("email",user.getEmail());
+               // intent.putExtra("email",user.getEmail());
+                intent.putExtra("number",user.getNumber());
                 intent.putExtra("name",user.getName());
                 context.startActivity(intent);
                 Activity activity = (Activity)context;
